@@ -61,19 +61,19 @@ public class ResponseGenerator {
         return devStatus;
     }
 
-    public static Map<String, DevStatus> generateDevStatusMap1() {
-        Map<String, DevStatus> result = new HashMap<>();
-        DevStatus devStatus = createDevState("机房门口");
+    public static Map<String, Object> generateOneWaySwitchStatus() {
+        Map<String, Object> result = new HashMap<>();
 
-        result.put("GNK9420041", devStatus);
+        Map<String, DevStatus> status = new HashMap<>();
+        DevStatus devStatus1 = createDevState("机房门口");
+        DevStatus devStatus2 = createDevState("过道");
+
+        status.put("GNK9420041", devStatus1);
+        status.put("GNK9420116", devStatus2);
+
+        result.put("OneWayLoraSwitch", status);
+        result.put("success", Boolean.TRUE);
         return result;
     }
 
-    public static Map<String, DevStatus> generateDevStatusMap2() {
-        Map<String, DevStatus> result = new HashMap<>();
-        DevStatus devStatus = createDevState("过道");
-
-        result.put("GNK9420041", devStatus);
-        return result;
-    }
 }

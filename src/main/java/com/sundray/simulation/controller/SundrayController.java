@@ -3,10 +3,7 @@ package com.sundray.simulation.controller;
 import com.sundray.simulation.request.ApiToken;
 import com.sundray.simulation.request.Pagination;
 import com.sundray.simulation.request.QueryParam;
-import com.sundray.simulation.response.AccessToken;
-import com.sundray.simulation.response.AllDevType;
-import com.sundray.simulation.response.DevData;
-import com.sundray.simulation.response.DevStatus;
+import com.sundray.simulation.response.*;
 import com.sundray.simulation.util.ResponseGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author: when
@@ -47,15 +42,9 @@ public class SundrayController {
     }
 
     @PostMapping("/device/getStatus")
-    public Map<String, Set<Map<String, DevStatus>>> getDevStatus(@RequestBody Map<String, QueryParam> params) {
+    public Map<String, Object> getDevStatus(@RequestBody Map<String, QueryParam> params) {
         logger.info("Get device status");
-        Map<String, Set<Map<String, DevStatus>>> result = new HashMap<>();
-        Map<String, DevStatus> dev1 = ResponseGenerator.generateDevStatusMap1();
-        Map<String, DevStatus> dev2 = ResponseGenerator.generateDevStatusMap2();
-        Set<Map<String, DevStatus>> set = new HashSet<>();
-        set.add(dev1);
-        set.add(dev2);
-        result.put("OneWayLoraSwitch", set);
+        Map<String, Object> result = ResponseGenerator.generateOneWaySwitchStatus();
         return result;
     }
 }
