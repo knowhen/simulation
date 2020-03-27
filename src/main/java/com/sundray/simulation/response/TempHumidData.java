@@ -6,7 +6,7 @@ import java.util.Map;
  * @author: when
  * @create: 2020-03-27  09:12
  **/
-public class TempHumidData extends DevData {
+public class TempHumidData extends NormalDevData {
     private String DEV_LUX;
     private String DEV_MOISTURE;
     private String DEV_SOC;

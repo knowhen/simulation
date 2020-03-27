@@ -1,8 +1,6 @@
 package com.sundray.simulation.util;
 
-import com.sundray.simulation.response.DevData;
-import com.sundray.simulation.response.DevStatus;
-import com.sundray.simulation.response.TempHumidData;
+import com.sundray.simulation.response.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +18,8 @@ public class DevStatusFactory {
             return generateTwoWaySwitchStatus();
         } else if (devType.equals("LoRaTempHumid")) {
             return generateTempHumidStatus();
+        } else if (devType.equals("空气质量检测仪4合1")) {
+            return generateAirQualityStatus();
         } else {
             return null;
         }
@@ -27,8 +27,16 @@ public class DevStatusFactory {
 
     public static Map<String, DevStatus> generateOneWaySwitchStatus() {
         Map<String, DevStatus> status = new HashMap<>();
-        DevData data1 = new DevData("GFG9390041", "-94.00", createTwoWayCloudState(), createTwoWaySyncState());
-        DevData data2 = new DevData("GFG9390041", "-75.00", createTwoWayCloudState(), createTwoWaySyncState());
+        NormalDevData data1 = new NormalDevData(
+                "GFG9390041",
+                "-94.00",
+                createOneWayCloudState(),
+                createOneWaySyncState());
+        NormalDevData data2 = new NormalDevData(
+                "GFG9390041",
+                "-75.00",
+                createOneWayCloudState(),
+                createOneWaySyncState());
         DevStatus devStatus1 = createDevState("机房门口", data1);
         DevStatus devStatus2 = createDevState("过道", data2);
 
@@ -40,8 +48,16 @@ public class DevStatusFactory {
 
     public static Map<String, DevStatus> generateTwoWaySwitchStatus() {
         Map<String, DevStatus> status = new HashMap<>();
-        DevData data1 = new DevData("GFG9390041", "-72.00", createTwoWayCloudState(), createTwoWaySyncState());
-        DevData data2 = new DevData("GFG9390041", "-67.00", createTwoWayCloudState(), createTwoWaySyncState());
+        DevData data1 = new NormalDevData(
+                "GFG9390041",
+                "-72.00",
+                createTwoWayCloudState(),
+                createTwoWaySyncState());
+        NormalDevData data2 = new NormalDevData(
+                "GFG9390041",
+                "-67.00",
+                createTwoWayCloudState(),
+                createTwoWaySyncState());
         DevStatus devStatus1 = createDevState("读报机上面", data1);
         DevStatus devStatus2 = createDevState("树中间", data2);
 
@@ -53,7 +69,10 @@ public class DevStatusFactory {
 
     private static Map<String, DevStatus> generateTempHumidStatus() {
         Map<String, DevStatus> status = new HashMap<>();
-        TempHumidData data = new TempHumidData("GFG9390041", "-98.00", createTempHumidCloudState(),
+        TempHumidData data = new TempHumidData(
+                "GFG9390041",
+                "-98.00",
+                createTempHumidCloudState(),
                 createTempHumidSyncState());
         data.setDEV_LUX("0.00");
         data.setDEV_MOISTURE("45.00");
@@ -61,6 +80,15 @@ public class DevStatusFactory {
         data.setDEV_TEMPRATURE("18.00");
         DevStatus devStatus = createDevState("温度", data);
         status.put("GJK9292365", devStatus);
+
+        return status;
+    }
+
+    private static Map<String, DevStatus> generateAirQualityStatus() {
+        Map<String, DevStatus> status = new HashMap<>();
+        AirQualityData data = new AirQualityData("0.00", "0.11", "32.00", "12.50");
+        DevStatus devStatus = createDevState("空气", data);
+        status.put("GQK9320010-4-1", devStatus);
 
         return status;
     }

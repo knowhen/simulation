@@ -1,7 +1,6 @@
 package com.sundray.simulation.util;
 
 import com.sundray.simulation.response.AllDevType;
-import com.sundray.simulation.response.DevData;
 import com.sundray.simulation.response.DevStatus;
 import com.sundray.simulation.response.DevType;
 
