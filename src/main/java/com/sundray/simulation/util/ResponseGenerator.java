@@ -23,55 +23,10 @@ public class ResponseGenerator {
         return new AllDevType(result, Boolean.TRUE, result.size());
     }
 
-    private static Map<String, String> createCloudState() {
-        Map<String, String> cloudState = new HashMap<>();
-        cloudState.put("DEV_SWITCH_STA_1", "0.00");
-        return cloudState;
-    }
-
-    private static Map<String, String> createSyncState() {
-        Map<String, String> syncState = new HashMap<>();
-        syncState.put("DEV_SWITCH_STA_1", "");
-        syncState.put("DEV_SWITCH_STA_1_BetaTime", "0");
-        return syncState;
-    }
-
-    private static DevData createDevData(String gateway, String loradbm) {
-        return new DevData(gateway, loradbm, createCloudState(), createSyncState());
-    }
-
-    private static DevStatus createDevState(String name) {
-        DevData data = createDevData("GFG9390041", "-94.00");
-
-        DevStatus devStatus = new DevStatus();
-        devStatus.setApp_id(2);
-        devStatus.setApp_name("郑州师范学院附属小学");
-        devStatus.setGroup_id(2);
-        devStatus.setGroup_name("郑州师范学院附属小学阅读中心环境大数据");
-        devStatus.setHardVer("SI-EWA-SW-T1-N-L");
-        devStatus.setLastTime("2020-03-16 14:06:13");
-        devStatus.setName(name);
-        devStatus.setOnlineTime("2020-03-14 17:40:41");
-        devStatus.setRoot_group_id(2);
-        devStatus.setRoot_group_name("郑州师范学院附属小学阅读中心环境大数据");
-        devStatus.setSoftVer("NLS2.19.0828");
-        devStatus.setStates("online");
-        devStatus.setSuccess(Boolean.TRUE);
-        devStatus.setData(data);
-        return devStatus;
-    }
-
-    public static Map<String, Object> generateOneWaySwitchStatus() {
+    public static Map<String, Object> generateDevStatus(String key) {
         Map<String, Object> result = new HashMap<>();
-
-        Map<String, DevStatus> status = new HashMap<>();
-        DevStatus devStatus1 = createDevState("机房门口");
-        DevStatus devStatus2 = createDevState("过道");
-
-        status.put("GNK9420041", devStatus1);
-        status.put("GNK9420116", devStatus2);
-
-        result.put("OneWayLoraSwitch", status);
+        Map<String, DevStatus> devStatus = DevStatusFactory.create(key);
+        result.put(key, devStatus);
         result.put("success", Boolean.TRUE);
         return result;
     }

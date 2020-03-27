@@ -44,7 +44,12 @@ public class SundrayController {
     @PostMapping("/device/getStatus")
     public Map<String, Object> getDevStatus(@RequestBody Map<String, QueryParam> params) {
         logger.info("Get device status");
-        Map<String, Object> result = ResponseGenerator.generateOneWaySwitchStatus();
+        Map<String, Object> result = null;
+        for (Map.Entry<String, QueryParam> entry : params.entrySet()) {
+            String key = entry.getKey();
+            logger.info("Get device: " + key + " status.");
+            result = ResponseGenerator.generateDevStatus(key);
+        }
         return result;
     }
 }
